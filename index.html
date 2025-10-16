@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Propuesta de valor tecnológico - Sistema Integral de Gestión Arqueológica impulsado por IA">
+    <meta name="author" content="HealthyTEk SpA">
+    <meta name="theme-color" content="#667eea">
+    <title>Propuesta Mankuk Consulting - HealthyTEk SpA</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏛️%3C/text%3E%3C/svg%3E">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f59e0b;
+            --success-color: #48bb78;
+            --danger-color: #f56565;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 15px rgba(0,0,0,0.2);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.3);
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 20px;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            overflow: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 2rem);
+            background: var(--bg-white);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PORTADA */
+        .cover-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .cover-slide h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 1.25rem;
+            font-weight: 300;
+            letter-spacing: 0.125rem;
+        }
+
+        .cover-slide h2 {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+        }
+
+        .cover-divider {
+            width: 60%;
+            height: 2px;
+            background: white;
+            margin: 1.875rem auto;
+        }
+
+        .cover-client {
+            font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+            margin: 1.875rem 0;
+            font-weight: 600;
+        }
+
+        .cover-attention {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin: 0.9375rem 0;
+            font-weight: 300;
+        }
+
+        .cover-provider {
+            margin-top: 3.125rem;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            font-weight: 300;
+        }
+
+        .cover-brand {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin: 0.9375rem 0;
+            letter-spacing: 0.1875rem;
+        }
+
+        .cover-slogan {
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            font-style: italic;
+            margin: 0.9375rem 0;
+            opacity: 0.95;
+        }
+
+        .cover-type {
+            margin-top: 2.5rem;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            font-weight: 300;
+        }
+
+        .cover-date {
+            margin-top: 1.25rem;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        /* BADGE PREMIUM */
+        .premium-slide {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #fbbf24 0%, var(--accent-color) 100%);
+            padding: clamp(1.5rem, 4vw, 3.125rem);
+            border-radius: var(--border-radius-xl);
+            text-align: center;
+            box-shadow: 0 0.625rem 2.5rem rgba(251, 191, 36, 0.3);
+            max-width: 50rem;
+            width: 100%;
+        }
+
+        .premium-badge h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #78350f;
+            margin-bottom: 1.875rem;
+        }
+
+        .premium-badge p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: #92400e;
+            line-height: 1.8;
+            margin: 0.9375rem 0;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+
+        .premium-item {
+            background: white;
+            padding: 1.25rem;
+            border-radius: var(--border-radius-lg);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+        }
+
+        .slide-header {
+            margin-bottom: 1.25rem;
+            border-bottom: 4px solid var(--primary-color);
+            padding-bottom: 0.9375rem;
+        }
+
+        .slide-header h1 {
+            color: var(--text-primary);
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .slide-header h2 {
+            color: var(--primary-color);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 600;
+            margin-top: 0.625rem;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 0.9375rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            background: var(--bg-white);
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.375rem, 1.5vw, 0.625rem);
+            text-align: center;
+            font-weight: 600;
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: clamp(0.375rem, 1.5vw, 0.625rem) clamp(0.5rem, 2vw, 0.75rem);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+            min-width: 200px;
+        }
+
+        tbody tr:hover {
+            background-color: var(--bg-light);
+        }
+
+        .check {
+            color: var(--success-color);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .cross {
+            color: var(--danger-color);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .category-row {
+            background: #edf2f7 !important;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-row td {
+            padding: clamp(0.5rem, 2vw, 0.75rem);
+            font-size: clamp(0.875rem, 1.6vw, 1rem);
+        }
+
+        .highlight-row {
+            background: #fef5e7 !important;
+            font-weight: 700;
+            font-size: clamp(0.875rem, 1.6vw, 1rem);
+        }
+
+        .highlight-row td {
+            color: #d97706;
+            padding: clamp(0.5rem, 2vw, 0.75rem);
+        }
+
+        .value-row {
+            background: #d1fae5 !important;
+            font-weight: 700;
+            font-size: clamp(0.875rem, 1.6vw, 1rem);
+        }
+
+        .value-row td {
+            color: #065f46;
+            padding: clamp(0.5rem, 2vw, 0.75rem);
+        }
+
+        .price-box {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: clamp(1.25rem, 3vw, 1.5625rem);
+            border-radius: var(--border-radius-lg);
+            margin: 1.25rem 0;
+            box-shadow: 0 0.25rem 0.9375rem rgba(102, 126, 234, 0.3);
+        }
+
+        .price-box h3 {
+            margin-bottom: 0.9375rem;
+            font-size: clamp(1.125rem, 2vw, 1.3rem);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(0.5rem, 2vw, 0.75rem) 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-label {
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .price-value {
+            font-size: clamp(1rem, 2.2vw, 1.3rem);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .config-box {
+            background: var(--bg-light);
+            border-left: 5px solid var(--primary-color);
+            padding: clamp(1rem, 3vw, 1.25rem);
+            margin: 0.9375rem 0;
+            border-radius: var(--border-radius);
+        }
+
+        .config-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.9375rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .config-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .config-line span:first-child {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .config-line span:last-child {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .config-total {
+            border-top: 3px solid var(--primary-color);
+            padding-top: 0.625rem;
+            margin-top: 0.625rem;
+            font-weight: 700;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-primary);
+        }
+
+        .incentives {
+            background: #fef5e7;
+            padding: 25px;
+            border-radius: 12px;
+            border: 3px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .incentives h3 {
+            color: #d97706;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .incentive-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 1.05em;
+        }
+
+        .incentive-item::before {
+            content: "✅";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .savings {
+            background: #48bb78;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        /* SLIDE DE CIERRE */
+        .closing-slide {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .closing-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .closing-title {
+            font-size: 2.5em;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .closing-steps {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .closing-step {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #2d3748;
+        }
+
+        .closing-step::before {
+            content: "✓";
+            color: #48bb78;
+            font-size: 1.5em;
+            margin-right: 15px;
+            font-weight: 700;
+        }
+
+        .closing-urgency {
+            background: #fef5e7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .closing-message {
+            font-size: 1.4em;
+            color: #2d3748;
+            margin: 30px 0;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .closing-brand {
+            margin-top: 40px;
+        }
+
+        .closing-brand h2 {
+            font-size: 2.2em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .closing-brand p {
+            font-size: 1.2em;
+            color: #4a5568;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .closing-contact {
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: clamp(1rem, 3vw, 1.875rem);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: clamp(0.5rem, 2vw, 0.9375rem);
+            z-index: 1000;
+            padding: 0 1rem;
+        }
+
+        .nav-btn {
+            background: var(--bg-white);
+            border: none;
+            padding: clamp(0.75rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5625rem);
+            border-radius: 1.5625rem;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            min-height: 44px;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0.375rem 1.25rem rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(0);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: clamp(1rem, 2vw, 1.25rem);
+            right: clamp(1rem, 3vw, 1.875rem);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 0.9375rem;
+            border-radius: 1.25rem;
+            font-weight: 600;
+            font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+            z-index: 10;
+        }
+
+        .footer-corporate {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.85em;
+            color: #718096;
+        }
+
+        .footer-corporate p {
+            margin: 3px 0;
+        }
+
+        .footer-corporate strong {
+            color: #667eea;
+        }
+
+        .notes-box {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .notes-box p {
+            margin: 0.3125rem 0;
+            font-size: clamp(0.875rem, 1.5vw, 0.95rem);
+            color: var(--text-secondary);
+        }
+
+        /* RESPONSIVE DESIGN */
+        
+        /* Mobile First - Base styles above are mobile optimized */
+        
+        /* Small Mobile (320px - 480px) */
+        @media (max-width: 30rem) {
+            .presentation {
+                padding: 0.5rem;
+            }
+            
+            .slide {
+                padding: 1rem;
+                height: calc(100vh - 1rem);
+                border-radius: var(--border-radius-lg);
+            }
+            
+            .premium-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            .price-value {
+                text-align: left;
+            }
+            
+            .config-line {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .config-line span:last-child {
+                text-align: left;
+            }
+            
+            table {
+                min-width: 500px;
+            }
+            
+            .navigation {
+                bottom: 0.5rem;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Tablet Portrait (481px - 768px) */
+        @media (min-width: 30.0625rem) and (max-width: 48rem) {
+            .slide {
+                padding: 1.5rem;
+            }
+            
+            .premium-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Tablet Landscape & Small Desktop (769px - 1024px) */
+        @media (min-width: 48.0625rem) and (max-width: 64rem) {
+            .slide {
+                padding: 2rem;
+            }
+            
+            table {
+                min-width: 700px;
+            }
+        }
+        
+        /* Large Desktop (1025px+) */
+        @media (min-width: 64.0625rem) {
+            .slide {
+                padding: 2.5rem 3rem;
+            }
+            
+            table {
+                min-width: auto;
+            }
+        }
+        
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-btn:hover {
+                transform: none;
+                box-shadow: var(--shadow-md);
+            }
+            
+            tbody tr:hover {
+                background-color: transparent;
+            }
+        }
+        
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+        
+        /* Landscape Mobile Specific */
+        @media (max-height: 30rem) and (orientation: landscape) {
+            .slide {
+                height: calc(100vh - 0.5rem);
+                padding: 1rem;
+            }
+            
+            .navigation {
+                bottom: 0.25rem;
+            }
+            
+            .slide-counter {
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .navigation,
+            .slide-counter {
+                display: none;
+            }
+            
+            .slide {
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- SLIDE 0: PORTADA -->
+        <div class="slide cover-slide active">
+            <h1>PROPUESTA DE VALOR TECNOLÓGICO</h1>
+            <h2>Sistema Integral de Gestión Arqueológica</h2>
+            <p style="font-size: 1.3em; font-weight: 300;">Impulsado por IA</p>
+            
+            <div class="cover-divider"></div>
+            
+            <p class="cover-client">MANKUK CONSULTING & SERVICES S.A.</p>
+            <p class="cover-attention">Att: Mauricio C. | Alexander von F.</p>
+            
+            <div class="cover-divider"></div>
+            
+            <p class="cover-provider">Presentado por</p>
+            <p class="cover-brand">HealthyTEk SpA</p>
+            <p class="cover-slogan">Innovación tecnológica premium para un mundo más eficiente</p>
+            
+            <p class="cover-type">Cotización Partner Estratégico</p>
+            <p class="cover-date">Octubre 2025</p>
+        </div>
+
+        <!-- SLIDE 1: BADGE PREMIUM -->
+        <div class="slide premium-slide">
+            <div class="slide-counter">1 / 17</div>
+            <div class="premium-badge">
+                <h1>🌟 PREMIUM PARTNER 🌟</h1>
+                <p>Esta cotización ha sido diseñada exclusivamente como parte de nuestro programa Premium Partner, reservado para clientes estratégicos.</p>
+                <p style="font-size: 1.1em; margin-top: 30px;">Mankuk Consulting & Services S.A. ha sido seleccionado para acceder a condiciones preferenciales, soporte dedicado y roadmap compartido.</p>
+                
+                <div class="premium-features">
+                    <div class="premium-item">✓ Calidad Enterprise</div>
+                    <div class="premium-item">✓ Soporte Personalizado</div>
+                    <div class="premium-item">✓ Roadmap Compartido</div>
+                    <div class="premium-item">✓ Innovación Continua</div>
+                </div>
+                
+                <p style="margin-top: 30px; font-size: 1.2em; font-weight: 600; color: #78350f;">Tecnología que genera valor, no solo código</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Cotización Premium - Confidencial para Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <div class="slide-counter">2 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Captura y Entrada de Datos + Validaciones</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">CAPTURA Y ENTRADA DE DATOS</td>
+                    </tr>
+                    <tr>
+                        <td>Formularios web/móvil responsivos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pre-rellenado desde datos maestros</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pre-rellenado desde última sesión</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Campos condicionales dinámicos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Validación tiempo real por campo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Captura audio voz en terreno</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Transcripción automática audio</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Captura fotos vía bot mensajería</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Extracción datos de voz (NER)</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pre-rellenado automático desde bot</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Comandos interactivos bot</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr class="category-row">
+                        <td colspan="4">VALIDACIONES Y PROCESAMIENTO</td>
+                    </tr>
+                    <tr>
+                        <td>Validación coordenadas UTM</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cálculo automático áreas</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Validación geometrías PostGIS</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Coordenadas dentro límites proyecto</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Validación área calc vs reportada</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Validación secuencia estratigráfica</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Autocompletado terminología técnica</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sugerencias estratigráficas histórico</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Validación consistencia semántica IA</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Detección patrones anómalos</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Alertas inconsistencias geográficas/tablas</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Alertas inconsistencias semánticas IA</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-counter">3 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Inteligencia Artificial</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">INTELIGENCIA ARTIFICIAL</td>
+                    </tr>
+                    <tr>
+                        <td>Generación borradores descripciones</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Análisis automático imágenes</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Descripciones fotos sugeridas</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Base conocimiento contextual 30 días</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Memoria por ubicación/cuadrante</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Búsqueda semántica en histórico</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Comparación reportes similares</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Repositorio terminología validada</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="notes-box">
+                <p><strong>💡 Nota sobre IA:</strong> Las funcionalidades de Inteligencia Artificial en Etapa 2 permiten:</p>
+                <p>• Reducir tiempo de redacción de informes en un 60%</p>
+                <p>• Mantener consistencia terminológica entre todos los arqueólogos</p>
+                <p>• Aprender del histórico del proyecto específico (memoria contextual)</p>
+                <p>• Sugerir descripciones basadas en patrones encontrados en ubicaciones similares</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-counter">4 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Gestión de Fotografías</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">GESTIÓN DE FOTOGRAFÍAS</td>
+                    </tr>
+                    <tr>
+                        <td>Biblioteca organizada /YYYY/MM/DD/</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Extracción metadatos EXIF</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Georreferenciación automática GPS</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Galería vista previa responsive</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Grid visualización (ajustable)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Búsqueda por ubicación/fecha/tipo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Filtros avanzados múltiples criterios</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Vinculación foto-frente automática</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Edición descripciones inline</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ordenamiento manual drag & drop</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Compresión automática >5MB</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Catalogación por metadatos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="notes-box">
+                <p><strong>📸 Sistema de Gestión Fotográfica Profesional:</strong></p>
+                <p>• Organización automática por fecha y proyecto</p>
+                <p>• Búsqueda visual rápida en grilla ajustable</p>
+                <p>• Geolocalización automática desde metadatos GPS de cámara</p>
+                <p>• Vinculación inteligente con frentes arqueológicos</p>
+                <p>• Optimización automática para reducir tiempos de carga</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <div class="slide-counter">5 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Generación de Documentos Word</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">GENERACIÓN DOCUMENTOS WORD</td>
+                    </tr>
+                    <tr>
+                        <td>Plantillas corporativas personalizadas</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Generación automática completa</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Logo y encabezados corporativos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tablas coordenadas formateadas (27 vértices)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Inserción automática fotografías</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Layout fotos 2 columnas con captions</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr style="background: #e0f2fe !important;">
+                        <td><strong>Mapas georreferenciados Python</strong></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Polígonos frentes con etiquetas</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Escala y coordenadas en mapa</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Formato consistente estilos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tiempo generación <5 minutos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Descarga directa inmediata</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Generación informes mensuales</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="notes-box">
+                <p><strong>🗺️ Generación Automática de Mapas con Python:</strong></p>
+                <p>• Mapas georreferenciados generados automáticamente desde la Etapa 1</p>
+                <p>• Polígonos de frentes con etiquetas identificadoras</p>
+                <p>• Escalas y coordenadas UTM integradas</p>
+                <p>• Formato profesional listo para entregar a clientes</p>
+                <p>• Sin intervención manual - Todo automatizado en <5 minutos</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-counter">6 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Gestión Documental y Workflow</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">GESTIÓN DOCUMENTAL</td>
+                    </tr>
+                    <tr>
+                        <td>Almacenamiento estructurado reportes</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Versionado automático documentos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Búsqueda por ID/cuadrante/fecha</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Búsqueda texto completo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Filtros combinados avanzados</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Historial cambios auditable</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Trazabilidad completa proceso</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr class="category-row">
+                        <td colspan="4">WORKFLOW Y ESTADOS</td>
+                    </tr>
+                    <tr>
+                        <td>Estados: Borrador→Revisión→Aprobado</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Aprobación por secciones</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dashboard validación por sección</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Indicadores % completitud</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Semáforos visuales (rojo/amarillo/verde)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Comentarios revisión por sección</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Notificaciones cambio estado (email)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Notificaciones push (móvil)</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Bloqueo edición reportes aprobados</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-counter">7 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Supervisión, Seguridad e Infraestructura</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">SUPERVISIÓN Y CONTROL</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboard KPIs tiempo real</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Reportes completados/pendientes/revisión</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Métricas por arqueólogo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Métricas por cuadrante</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tendencias temporales</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Alertas reportes críticos</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Priorización hallazgos no previstos</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Herramientas análisis comparativo</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr class="category-row">
+                        <td colspan="4">ROLES Y SEGURIDAD</td>
+                    </tr>
+                    <tr>
+                        <td>Control permisos por rol</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Arqueólogo: edita sus reportes</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Supervisor: aprueba todos</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Autenticación usuario/contraseña</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr class="category-row">
+                        <td colspan="4">INFRAESTRUCTURA</td>
+                    </tr>
+                    <tr>
+                        <td>Hosting Azure cloud</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Backups diarios retención 7 días</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Operación 12 hrs/día (ahorro 50%)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-counter">8 / 17</div>
+            <div class="slide-header">
+                <h1>COMPARATIVA COMPLETA ALCANCES POR ETAPA</h1>
+                <h2>Capacitación, Soporte y Resultados</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%">Funcionalidad</th>
+                        <th>Etapa 1 Base</th>
+                        <th>+ Etapa 2 IA</th>
+                        <th>+ Etapa 3 Chatbot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">CAPACITACIÓN Y SOPORTE</td>
+                    </tr>
+                    <tr>
+                        <td>Manual usuario arqueólogo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Manual usuario supervisor</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Videos tutoriales</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sesión capacitación en vivo</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>FAQ y troubleshooting</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Soporte L1-L2 (9-18hrs)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <div class="table-container">
+            <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50%">Métrica</th>
+                            <th>Etapa 1 Base</th>
+                            <th>+ Etapa 2 IA</th>
+                            <th>+ Etapa 3 Chatbot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>TIEMPO POR REPORTE</td>
+                            <td>65 min</td>
+                            <td>42 min</td>
+                            <td>22 min</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>AHORRO vs MANUAL (100 min)</td>
+                            <td>35%</td>
+                            <td>58%</td>
+                            <td>78%</td>
+                        </tr>
+                        <tr class="value-row">
+                            <td>VALOR GENERADO/MES (20 rep/día)</td>
+                            <td>$5.8M</td>
+                            <td>$9.7M</td>
+                            <td>$13M</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <div class="notes-box" style="margin-top: 20px;">
+                <p><strong>✅ Funcionalidad incluida y operativa</strong></p>
+                <p><strong>❌ No incluida en esta etapa</strong></p>
+            </div>
+
+            <div style="background: #d1fae5; padding: 25px; border-radius: 12px; margin-top: 20px; text-align: center; border: 3px solid #48bb78;">
+                <h3 style="color: #065f46; font-size: 1.5em; margin-bottom: 10px;">🎯 Etapa 1 ya incluye 80%+ de funcionalidades</h3>
+                <p style="color: #047857; font-size: 1.2em;">Sistema completo y funcional desde el primer día con gestión fotográfica, mapas automáticos y documentación profesional</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: PRECIOS - Setup -->
+        <div class="slide">
+            <div class="slide-counter">9 / 17</div>
+            <div class="slide-header">
+                <h1>ESTRUCTURA DE PRECIOS</h1>
+                <h2>Inversión Inicial (Setup)</h2>
+            </div>
+            
+            <div class="price-box">
+                <div class="price-item">
+                    <span class="price-label">SOLO E1</span>
+                    <span class="price-value">$4.000.000</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-label">BUNDLE E1+E2</span>
+                    <span class="price-value">$6.000.000 <small>(-25% descuento)</small></span>
+                </div>
+                <div class="price-item">
+                    <span class="price-label">BUNDLE E1+E2+E3</span>
+                    <span class="price-value">$8.000.000 <small>(-33% descuento)</small></span>
+                </div>
+            </div>
+
+            <div style="background: #edf2f7; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <h3 style="color: #2d3748; margin-bottom: 15px;">Forma de Pago:</h3>
+                <p style="font-size: 1.2em; color: #4a5568; text-align: center;">
+                    <strong>40%</strong> firma / <strong>30%</strong> go-live E1 / <strong>30%</strong> activación final
+                </p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: PRECIOS - Plataforma Base -->
+        <div class="slide">
+            <div class="slide-counter">10 / 17</div>
+            <div class="slide-header">
+                <h1>MENSUALIDAD RECURRENTE</h1>
+                <h2>Plataforma Base (Todos la necesitan)</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Precio</th>
+                        <th>Incluye</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Plataforma E1</strong></td>
+                        <td><strong style="color: #667eea; font-size: 1.3em;">$600.000</strong></td>
+                        <td>Hasta 15 usuarios</td>
+                    </tr>
+                    <tr>
+                        <td>Usuario adicional</td>
+                        <td>$20.000</td>
+                        <td>Desde usuario 16</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: PRECIOS - Módulo IA -->
+        <div class="slide">
+            <div class="slide-counter">11 / 17</div>
+            <div class="slide-header">
+                <h1>MENSUALIDAD RECURRENTE</h1>
+                <h2>Módulo IA (Opcional - Team License)</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Precio</th>
+                        <th>Incluye</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Módulo E2</strong></td>
+                        <td><strong style="color: #667eea; font-size: 1.3em;">$800.000</strong></td>
+                        <td>Hasta 20 usuarios team<br>$200.000 bolsa APIs</td>
+                    </tr>
+                    <tr>
+                        <td>Usuario adicional</td>
+                        <td>$40.000</td>
+                        <td>Desde usuario 21</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div style="background: #d1fae5; padding: 25px; border-radius: 12px; margin-top: 30px; border-left: 5px solid #48bb78;">
+                <h3 style="color: #065f46; margin-bottom: 10px; font-size: 1.3em;">💡 Ventaja Team License</h3>
+                <p style="color: #047857; font-size: 1.1em;">
+                    Todos los usuarios con acceso E1 pueden usar IA sin costo adicional (hasta 20 usuarios).
+                </p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: PRECIOS - Chatbot y APIs -->
+        <div class="slide">
+            <div class="slide-counter">12 / 17</div>
+            <div class="slide-header">
+                <h1>MENSUALIDAD RECURRENTE</h1>
+                <h2>Licencia Chatbot (Premium Individual)</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Precio</th>
+                        <th>Incluye</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Licencia E3</strong></td>
+                        <td><strong style="color: #667eea; font-size: 1.3em;">$120.000</strong></td>
+                        <td>Por usuario individual<br>Vinculada a celular<br>$20.000 bolsa APIs incluida</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div style="background: #fef3c7; padding: 25px; border-radius: 12px; margin-top: 30px; border-left: 5px solid #f59e0b;">
+                <h3 style="color: #92400e; margin-bottom: 10px; font-size: 1.3em;">⭐ Diferenciador</h3>
+                <p style="color: #78350f; font-size: 1.1em;">
+                    Solo los arqueólogos que necesiten captura conversacional desde terreno requieren esta licencia premium.
+                </p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h2 style="color: #2d3748; margin-bottom: 20px;">APIs Extra</h2>
+                <div class="table-container">
+            <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Precio</th>
+                            <th>Características</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bolsa APIs</strong></td>
+                            <td><strong>$100.000</strong></td>
+                            <td>Acumulable hasta 3 meses<br>Bajo demanda<br>Sin recargo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Ejemplos Config Simple -->
+        <div class="slide">
+            <div class="slide-counter">13 / 17</div>
+            <div class="slide-header">
+                <h1>EJEMPLOS DE CONFIGURACIÓN</h1>
+                <h2>Mensualidad según necesidades</h2>
+            </div>
+            
+            <div class="config-box">
+                <h3>Configuración A: 12 Usuarios Básicos</h3>
+                <div class="config-line">
+                    <span>Plataforma E1:</span>
+                    <span>$600.000</span>
+                </div>
+                <div class="config-line config-total">
+                    <span>TOTAL MENSUAL:</span>
+                    <span>$600.000</span>
+                </div>
+            </div>
+
+            <div class="config-box">
+                <h3>Configuración B: 14 Usuarios con IA <span style="color: #48bb78;">(Recomendado)</span></h3>
+                <div class="config-line">
+                    <span>Plataforma E1:</span>
+                    <span>$600.000</span>
+                </div>
+                <div class="config-line">
+                    <span>Módulo IA E2 (team):</span>
+                    <span>$800.000</span>
+                </div>
+                <div class="config-line config-total">
+                    <span>TOTAL MENSUAL:</span>
+                    <span>$1.400.000</span>
+                </div>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Ejemplos Config Avanzada -->
+        <div class="slide">
+            <div class="slide-counter">14 / 17</div>
+            <div class="slide-header">
+                <h1>EJEMPLOS DE CONFIGURACIÓN</h1>
+                <h2>Configuraciones avanzadas</h2>
+            </div>
+            
+            <div class="config-box">
+                <h3>Configuración C: 10 con IA + 4 con Chatbot</h3>
+                <div class="config-line">
+                    <span>Plataforma E1:</span>
+                    <span>$600.000</span>
+                </div>
+                <div class="config-line">
+                    <span>Módulo IA E2 (team):</span>
+                    <span>$800.000</span>
+                </div>
+                <div class="config-line">
+                    <span>4 Licencias E3:</span>
+                    <span>$480.000</span>
+                </div>
+                <div class="config-line config-total">
+                    <span>TOTAL MENSUAL:</span>
+                    <span>$1.880.000</span>
+                </div>
+            </div>
+
+            <div class="config-box">
+                <h3>Configuración D: 25 Usuarios (20 IA + 5 básicos + 8 Chatbot)</h3>
+                <div class="config-line">
+                    <span>Plataforma E1: $600k + 10×$20k</span>
+                    <span>$800.000</span>
+                </div>
+                <div class="config-line">
+                    <span>Módulo IA E2 (team):</span>
+                    <span>$800.000</span>
+                </div>
+                <div class="config-line">
+                    <span>8 Licencias E3:</span>
+                    <span>$960.000</span>
+                </div>
+                <div class="config-line config-total">
+                    <span>TOTAL MENSUAL:</span>
+                    <span>$2.560.000</span>
+                </div>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Resumen ROI -->
+        <div class="slide">
+            <div class="slide-counter">15 / 17</div>
+            <div class="slide-header">
+                <h1>RESUMEN COMPARATIVO AÑO 1</h1>
+                <h2>Análisis de ROI por configuración</h2>
+            </div>
+            
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Config</th>
+                        <th>Usuarios</th>
+                        <th>Setup</th>
+                        <th>Mensual</th>
+                        <th>Año 1 Total</th>
+                        <th>ROI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A</strong></td>
+                        <td>12 E1</td>
+                        <td>$4.000k</td>
+                        <td>$600k</td>
+                        <td>$10.000k</td>
+                        <td style="color: #48bb78; font-weight: 700;">480%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B</strong></td>
+                        <td>14 E1+E2</td>
+                        <td>$6.000k</td>
+                        <td>$1.400k</td>
+                        <td>$20.000k</td>
+                        <td style="color: #48bb78; font-weight: 700;">480%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C</strong></td>
+                        <td>10 E2 + 4 E3</td>
+                        <td>$8.000k</td>
+                        <td>$1.880k</td>
+                        <td>$26.800k</td>
+                        <td style="color: #48bb78; font-weight: 700;">441%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D</strong></td>
+                        <td>25 mixto + 8 E3</td>
+                        <td>$8.000k</td>
+                        <td>$2.560k</td>
+                        <td>$33.600k</td>
+                        <td style="color: #48bb78; font-weight: 700;">677%</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div style="background: #d1fae5; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; border: 3px solid #48bb78;">
+                <h3 style="color: #065f46; font-size: 1.8em; margin-bottom: 10px;">✓ Todos los escenarios</h3>
+                <p style="color: #047857; font-size: 2em; font-weight: 700;">ROI > 400%</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Incentivos -->
+        <div class="slide">
+            <div class="slide-counter">16 / 17</div>
+            <div class="slide-header">
+                <h1>INCENTIVOS FIRMA INMEDIATA</h1>
+                <h2>Hasta 25 de Octubre</h2>
+            </div>
+            
+            <div class="incentives">
+                <h3>🎁 Beneficios Exclusivos</h3>
+                <div class="incentive-item">
+                    <strong>5% descuento setup</strong> (-$200k a -$400k)
+                </div>
+                <div class="incentive-item">
+                    <strong>Primer mes 50% descuento</strong> (-$300k a -$1.280k)
+                </div>
+                <div class="incentive-item">
+                    <strong>Módulo Reportería Avanzada</strong> (Valor $1.200k) SIN COSTO
+                </div>
+                <div class="incentive-item">
+                    <strong>Capacitación extendida 2 semanas</strong> (Valor $800k) SIN COSTO
+                </div>
+                
+                <div class="savings">
+                    AHORRO TOTAL: $2.500.000 - $3.800.000
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-top: 30px; text-align: center;">
+                <h3 style="font-size: 2em; margin-bottom: 15px;">⏰ Oferta por Tiempo Limitado</h3>
+                <p style="font-size: 1.3em;">Válida hasta el 25 de Octubre de 2025</p>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Documento confidencial para uso exclusivo de Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: CIERRE -->
+        <div class="slide closing-slide">
+            <div class="slide-counter">17 / 17</div>
+            <div class="closing-content">
+                <h1 class="closing-title">PRÓXIMOS PASOS</h1>
+                
+                <div class="closing-steps">
+                    <div class="closing-step">Reunión de validación técnica</div>
+                    <div class="closing-step">Ajuste fino de alcances</div>
+                    <div class="closing-step">Firma y kick-off del proyecto</div>
+                </div>
+                
+                <div class="closing-urgency">
+                    <p style="font-size: 1.2em; color: #92400e; font-weight: 600; text-align: center;">
+                        ⏰ Incentivos válidos hasta 25-Oct-2025
+                    </p>
+                </div>
+                
+                <p class="closing-message">
+                    Mauricio & Alexander:<br>
+                    Estamos listos para iniciar esta transformación digital con ustedes.
+                </p>
+                
+                <div style="border-top: 3px solid #667eea; margin: 40px 0; padding-top: 40px;">
+                    <h2 style="font-size: 2em; color: #2d3748; margin-bottom: 20px;">Gracias por su confianza</h2>
+                    
+                    <div class="closing-brand">
+                        <h2>HealthyTEk SpA</h2>
+                        <p>"Innovación tecnológica premium para un mundo más eficiente"</p>
+                        <p style="margin-top: 20px; font-style: normal; color: #2d3748;">Tecnología que genera valor, no solo código</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-corporate">
+                <p><strong>© 2025 HealthyTEk SpA</strong> | Todos los derechos reservados</p>
+                <p>Cotización Premium - Preparado exclusivamente para Mankuk Consulting & Services S.A.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isTransitioning = false;
+
+        function showSlide(n) {
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Reset transition lock after animation
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 300);
+        }
+
+        function changeSlide(direction) {
+            if (direction > 0 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction < 0 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Touch navigation
+        function handleTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchEnd(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0) {
+                    // Swipe right - go to previous slide
+                    changeSlide(-1);
+                } else {
+                    // Swipe left - go to next slide
+                    changeSlide(1);
+                }
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                changeSlide(-1);
+            }
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+            if (e.key === 'Home') {
+                e.preventDefault();
+                showSlide(0);
+            }
+            if (e.key === 'End') {
+                e.preventDefault();
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Touch event listeners
+        document.addEventListener('touchstart', handleTouchStart, { passive: true });
+        document.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                // Force a repaint after orientation change
+                document.body.style.display = 'none';
+                document.body.offsetHeight; // Trigger reflow
+                document.body.style.display = '';
+            }, 100);
+        });
+
+        // Initial state
+        document.getElementById('prevBtn').disabled = true;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure first slide is active
+            slides[0].classList.add('active');
+        });
+    </script>
+</body>
+</html>
